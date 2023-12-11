@@ -1,0 +1,48 @@
+-----------------------------------------------------------------------------------------------------------------------------
+| Test ID   | Description                                           | Expected Results          | Actual Results            |
+----------------------------------------------------------------------------------------------------------------------------|
+setProfile  | Preconditions: - User X no profile                    | User X can see their      | User X can see their      |
+(Mason)     | Steps: 1. User X creates a profile                    | entered attributes on     | entered attributes on     |
+01          |        2. User X adds several profile attributes      | their profile.            | their profile.            |
+----------------------------------------------------------------------------------------------------------------------------|
+removeAttr  | Preconditions: - User X has profile with attribute A  | User X no longer has      | User X no longer has      |
+(Mason)     | Steps: 1. User X removes attribute A                  | attribute A.              | attribute A.              |
+02          |                                                       |                           |                           |
+----------------------------------------------------------------------------------------------------------------------------|
+mentorMatch | Preconditions: - User X has a profile                 | User X is entered into    | User X is entered into    |
+(Mason)     |                - User Y is searching to help someone  | the pool and is paired    | the pool and is paired    |
+03          | Steps: 1. User X attempts to search for a mentor      | with (mentor) user Y.     | with (mentor) user Y.     |
+----------------------------------------------------------------------------------------------------------------------------|
+projMatch   | Preconditions: - User X has a profile                 | User X is entered into    | User X is entered into    |
+(Mason)     |                - User Y is searching for a project    | the pool and is paired    | the pool and is paired    |
+04          | Steps: 1. User X attempts to search for a project     | with user Y for a project.| with user Y for a project.|
+----------------------------------------------------------------------------------------------------------------------------|
+concurrency | Preconditions: - User X is searching for a match      | User X is matched with    | User X is matched with    |
+(Mason)     |                - User Y is searching for a match      | User Y. No failures occur.| User Y. No failures occur.|
+05          | Steps: 1. User X and User Y queue the service at the  | No latency change is      | No latency change is      |
+            |           exact same time                             | experienced               | experienced               |
+----------------------------------------------------------------------------------------------------------------------------|
+noMatchMent | Preconditions: - User X is looking for a mentor       | The users do not pair.    | The users do not pair.    |
+(Mason)     |                - User Y is looking for a mentor       | They sit in queue for the | They sit in queue for the |
+06          | Steps: 1. User X and User Y queue within ~5 minutes   | entirety of the 5 minutes | entirety of the 5 minutes |
+            |           of one another                              |                           |                           |
+            |        2. Both users remain in queue for ~5 minutes   |                           |                           |
+----------------------------------------------------------------------------------------------------------------------------|
+noMatchDiff | Preconditions: - User X is looking for a project      | The users do not pair.    | The users do not pair.    |
+(Mason)     |                - User Y is looking for a mentor       | They sit in queue for the | They sit in queue for the |
+07          | Steps: 1. User X and User Y queue within ~5 minutes   | entirety of the 5 minutes | entirety of the 5 minutes |
+            |           of one another                              |                           |                           |
+            |        2. Both users remain in queue for ~5 minutes   |                           |                           |
+----------------------------------------------------------------------------------------------------------------------------|
+errorHandle | Preconditions: - User X has a profile                 | User X is met with an     | The application crashes.  |
+(Mason)     |                - Server is not accepting requests     | error upon queueing. They |                           |
+08          | Steps: 1. User X queues                               | are returned to lobby.    |                           |
+----------------------------------------------------------------------------------------------------------------------------|
+enterPool   | Preconditions: - User X has a profile                 | User X is entered into    | User X is entered into    |
+(Mason)     | Steps: 1. User X queues to work on a project          | the queue. They are an    | the queue. They are an    |
+09          |                                                       | option for pairing.       | option for pairing.       |
+----------------------------------------------------------------------------------------------------------------------------|
+exitPool    | Preconditions: - User X has a profile                 | User X is removed from    | User X is removed from    |
+(Mason)     | Steps: 1. User X queues to work on a project          | the queue. They are not   | the queue. They are not   |
+10          |        2. User X dequeues from the project queue      | an option for pairing.    | an option for pairing.    |
+-----------------------------------------------------------------------------------------------------------------------------
